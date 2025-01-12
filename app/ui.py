@@ -9,9 +9,9 @@ from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.clock import Clock
 from app.__init__ import load_vocab
-from app.speech import listen_for_word
 from app.tts import speak_word
 from app.logic import select_random_word, check_answer
+from app.speech import listen_for_word
 
 class QuizWordDisplay(BoxLayout):
     current_word = StringProperty("")
@@ -24,7 +24,7 @@ class QuizWordDisplay(BoxLayout):
 
         # Set background color to gray
         with self.canvas.before:
-            Color(0.2, 0.2, 0.2, 1)
+            Color(0.2, 0.2, 0.2, 1)  # Light gray color
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
 
@@ -90,8 +90,8 @@ class QuizWordDisplay(BoxLayout):
             pos_hint={"center_x": 0.5},  # Center horizontally
             md_bg_color=(0.2, 0.6, 0.86, 1),  # Custom background color
         )
-        submit_button_layout.add_widget(self.submit_button)
         self.submit_button.bind(on_press=self.check_answer)
+        submit_button_layout.add_widget(self.submit_button)
         self.add_widget(submit_button_layout)
 
         # Speak Button
@@ -107,8 +107,8 @@ class QuizWordDisplay(BoxLayout):
             pos_hint={"center_x": 0.5},  # Center horizontally
             md_bg_color=(0.2, 0.6, 0.86, 1),  # Custom background color
         )
+        self.speak_button.bind(on_press=self.listen_for_word)
         speak_button_layout.add_widget(self.speak_button)
-        self.speak_button.bind(on_press=self.speak_current_word)
         self.add_widget(speak_button_layout)
 
         # Feedback Label
@@ -139,7 +139,7 @@ class QuizWordDisplay(BoxLayout):
         # Schedule the word to be spoken after a delay
         Clock.schedule_once(self.speak_current_word, 1)  # 1-second delay
 
-    def speak_current_word(self, dt):
+    def speak_current_word(self, dt=None):
         """Speak the current word."""
         speak_word(self.current_word)
 
@@ -152,7 +152,7 @@ class QuizWordDisplay(BoxLayout):
             Clock.schedule_once(self.show_random_word, 1)  # Delay of 1 second
         else:
             self.feedback_label.text = "Try Again!"
-            self.feedback_label.color = (1, 0, 0, 1) 
+            self.feedback_label.color = (1, 0, 0, 1)  # Red
 
     def listen_for_word(self, *args):
         """Listen for the spoken word and check if it is correct."""
@@ -160,7 +160,7 @@ class QuizWordDisplay(BoxLayout):
         self.feedback_label.text = message
         self.feedback_label.color = (0, 1, 0, 1) if success else (1, 0, 0, 1)
         if success:
-            Clock.schedule_once(self.show_random_word, 1)
+            Clock.schedule_once(self.show_random_word, 1)  # Delay of 1 second
 
     def repeat_word(self, *args):
         speak_word(self.current_word)
