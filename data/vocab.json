@@ -1,5 +1,6 @@
 {
-    "words": [
+  "categories": {
+    "colors": [
       {"hindi": "लाल", "english": "Red"},
       {"hindi": "नीला", "english": "Blue"},
       {"hindi": "हरा", "english": "Green"},
@@ -13,6 +14,18 @@
       {"hindi": "ग्रे", "english": "Gray"},
       {"hindi": "सुनहरा", "english": "Golden"},
       {"hindi": "चांदी", "english": "Silver"}
+    ],
+    "family": [
+      {"hindi": "माँ", "english": "Mother"},
+      {"hindi": "पिता", "english": "Father"},
+      {"hindi": "भाई", "english": "Brother"},
+      {"hindi": "बहन", "english": "Sister"}
+    ],
+    "numbers": [
+      {"hindi": "एक", "english": "One"},
+      {"hindi": "दो", "english": "Two"},
+      {"hindi": "तीन", "english": "Three"},
+      {"hindi": "चार", "english": "Four"}
     ]
   }
-  
+}

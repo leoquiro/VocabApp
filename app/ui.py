@@ -19,7 +19,7 @@ class QuizWordDisplay(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(orientation="vertical", **kwargs)
-        self.vocab = load_vocab()["words"]  # Load vocabulary once
+        self.vocab = []  # Initialize with an empty list
         self.font_path = "assets/NotoSansDevanagari-VariableFont_wdth,wght.ttf"
 
         # Set background color to gray
@@ -120,9 +120,6 @@ class QuizWordDisplay(BoxLayout):
         )
         self.add_widget(self.feedback_label)
 
-        # Display the first word
-        self.show_random_word()
-
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
@@ -131,6 +128,8 @@ class QuizWordDisplay(BoxLayout):
 
     def show_random_word(self, dt=None):
         """Randomly select a new word, update the display, and speak it."""
+        if not self.vocab:
+            return
         self.current_word, self.correct_meaning = select_random_word(self.vocab)
         self.word_label.text = self.current_word
         self.input_field.text = ""
@@ -170,6 +169,11 @@ class QuizWordDisplay(BoxLayout):
 
     def repeat_word(self, *args):
         speak_word(self.current_word)
+
+    def load_words(self, words):
+        """Load a new set of words and display the first one."""
+        self.vocab = words
+        self.show_random_word()
 
 def build_layout():
     return QuizWordDisplay()

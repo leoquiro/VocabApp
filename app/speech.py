@@ -6,7 +6,8 @@ def listen_for_word(correct_meaning, language):
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        audio = recognizer.listen(source)
+        recognizer.adjust_for_ambient_noise(source, duration=1)
+        audio = recognizer.listen(source, timeout=5, phrase_time_limit=5)
         try:
             # Use the specified language for speech recognition
             spoken_word = recognizer.recognize_google(audio, language=language).strip().lower()

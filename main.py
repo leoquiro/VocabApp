@@ -1,9 +1,9 @@
 from kivymd.app import MDApp
-from app.ui import build_layout
+from app.menu import MyScreenManager
 
 class HindiVocabApp(MDApp):
     def build(self):
-        return build_layout()
+        return MyScreenManager()
 
 if __name__ == '__main__':
     HindiVocabApp().run()
