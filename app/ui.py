@@ -16,6 +16,7 @@ from app.speech import listen_for_word
 class QuizWordDisplay(BoxLayout):
     current_word = StringProperty("")
     correct_meaning = StringProperty("")
+    category_title = StringProperty("")
 
     def __init__(self, **kwargs):
         super().__init__(orientation="vertical", **kwargs)
@@ -27,6 +28,16 @@ class QuizWordDisplay(BoxLayout):
             Color(0.2, 0.2, 0.2, 1)  # Light gray color
             self.rect = Rectangle(size=self.size, pos=self.pos)
         self.bind(size=self._update_rect, pos=self._update_rect)
+
+        # Category Title Label
+        self.category_label = Label(
+            text=self.category_title,
+            font_size=32,
+            halign="center",
+            valign="middle",
+            size_hint=(1, 0.2),
+        )
+        self.add_widget(self.category_label)
 
         # Top layout for word and repeat button
         top_layout = AnchorLayout(anchor_x="right", size_hint=(1, 0.6))
@@ -54,6 +65,18 @@ class QuizWordDisplay(BoxLayout):
 
         # Add top layout to main layout
         self.add_widget(top_layout)
+
+        # Hint Button
+        self.hint_button = MDRaisedButton(
+            text="Hint",
+            font_size=24,
+            size_hint=(0.7, None),  # 70% width
+            height=50,  # Fixed height
+            pos_hint={"center_x": 0.5},  # Center horizontally
+            md_bg_color=(0.2, 0.6, 0.86, 1),  # Custom background color
+        )
+        self.hint_button.bind(on_press=self.show_hint)
+        self.add_widget(self.hint_button)
 
         # Text Input for Meaning
         input_layout = BoxLayout(
@@ -170,9 +193,16 @@ class QuizWordDisplay(BoxLayout):
     def repeat_word(self, *args):
         speak_word(self.current_word)
 
-    def load_words(self, words):
+    def show_hint(self, *args):
+        """Show the meaning of the current word in the other language."""
+        self.feedback_label.text = self.correct_meaning
+        self.feedback_label.color = (0, 0, 1, 1)  # Blue
+
+    def load_words(self, words, category_title):
         """Load a new set of words and display the first one."""
         self.vocab = words
+        self.category_title = category_title
+        self.category_label.text = category_title
         self.show_random_word()
 
 def build_layout():

@@ -26,6 +26,18 @@
       {"hindi": "दो", "english": "Two"},
       {"hindi": "तीन", "english": "Three"},
       {"hindi": "चार", "english": "Four"}
+    ],
+    "animals": [
+      {"hindi": "कुत्ता", "english": "Dog"},
+      {"hindi": "बिल्ली", "english": "Cat"},
+      {"hindi": "गाय", "english": "Cow"},
+      {"hindi": "घोड़ा", "english": "Horse"}
+    ],
+    "fruits": [
+      {"hindi": "सेब", "english": "Apple"},
+      {"hindi": "केला", "english": "Banana"},
+      {"hindi": "संतरा", "english": "Orange"},
+      {"hindi": "अंगूर", "english": "Grapes"}
     ]
   }
 }
