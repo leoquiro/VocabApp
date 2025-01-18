@@ -156,7 +156,13 @@ class QuizWordDisplay(BoxLayout):
 
     def listen_for_word(self, *args):
         """Listen for the spoken word and check if it is correct."""
-        success, message = listen_for_word(self.correct_meaning)
+        # Determine the language based on the current word
+        if any(word["hindi"] == self.current_word for word in self.vocab):
+            language = "en"
+        else:
+            language = "hi"
+        
+        success, message = listen_for_word(self.correct_meaning, language)
         self.feedback_label.text = message
         self.feedback_label.color = (0, 1, 0, 1) if success else (1, 0, 0, 1)
         if success:
