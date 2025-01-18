@@ -1,21 +1,19 @@
-# Hindi Vocabulary App
+# Hindi Vocabulary App Backend
 
-This is a Hindi Vocabulary App built using Kivy and KivyMD. The app helps users learn Hindi vocabulary by displaying words in Hindi or English and asking the user to provide the correct translation. The app also supports speech recognition and text-to-speech functionality.
+This is the backend for the Hindi Vocabulary App. It provides APIs for vocabulary data, answer checking, and text-to-speech functionality.
 
 ## Features
 
-- Display random Hindi or English words and ask for the correct translation.
+- Serve vocabulary data via RESTful APIs.
 - Check the user's input and provide feedback.
-- Use speech recognition to listen for the user's spoken input.
 - Use text-to-speech to pronounce the displayed word.
-- Customizable UI with Kivy and KivyMD.
 
 ## Installation
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/hindi-vocab-app.git
-    cd hindi-vocab-app
+    git clone https://github.com/yourusername/hindi-vocab-app-backend.git
+    cd hindi-vocab-app-backend
     ```
 
 2. Create a virtual environment and activate it:
@@ -29,40 +27,37 @@ This is a Hindi Vocabulary App built using Kivy and KivyMD. The app helps users 
     pip install -r requirements.txt
     ```
 
-4. Ensure you have the necessary system dependencies for [pygame](http://_vscodecontentref_/0) and [speech_recognition](http://_vscodecontentref_/1).
-
 ## Usage
 
-1. Run the app:
+1. Run the backend server:
     ```sh
-    python main.py
+    python app.py
     ```
 
-2. The app will display a random word in Hindi or English. Enter the correct translation in the text input field and press "Submit".
+2. The backend server will be available at `http://localhost:5000`.
 
-3. Use the "Speak" button to hear the pronunciation of the displayed word.
+## API Endpoints
 
-4. Use the "Repeat" button to hear the pronunciation again.
-
-5. The app will provide feedback on whether the entered translation is correct or not.
+- `GET /api/vocab`: Fetch vocabulary data.
+- `GET /api/random-word?category=<category>`: Fetch a random word from the specified category.
+- `POST /api/check-answer`: Check if the user's answer is correct.
+- `POST /api/speak-word`: Generate and return the audio for a word.
 
 ## File Structure
 
-- [main.py](http://_vscodecontentref_/2): Entry point of the application.
-- [app](http://_vscodecontentref_/3): Contains the main application logic.
-  - [__init__.py](http://_vscodecontentref_/4): Loads the vocabulary from the JSON file.
-  - [logic.py](http://_vscodecontentref_/5): Contains functions for selecting random words and checking answers.
-  - [speech.py](http://_vscodecontentref_/6): Contains functions for speech recognition.
-  - [tts.py](http://_vscodecontentref_/7): Contains functions for text-to-speech.
-  - [ui.py](http://_vscodecontentref_/8): Contains the UI layout and logic.
-- [assets](http://_vscodecontentref_/9): Contains assets such as fonts.
-- [data](http://_vscodecontentref_/10): Contains data files such as the vocabulary JSON file.
+- [app.py](app.py): Entry point of the backend application.
+- [app](app): Contains the main application logic.
+  - [__init__.py](app/__init__.py): Loads the vocabulary from the JSON file.
+  - [logic.py](app/logic.py): Contains functions for selecting random words and checking answers.
+  - [speech.py](app/speech.py): Contains functions for speech recognition.
+  - [tts.py](app/tts.py): Contains functions for text-to-speech.
+- [assets](assets): Contains assets such as fonts.
+- [data](data): Contains data files such as the vocabulary JSON file.
 
 ## Dependencies
 
-- Kivy
-- KivyMD
-- SpeechRecognition
+- Flask
+- Flask-Cors
 - gTTS
 - pygame
 
@@ -72,8 +67,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Acknowledgements
 
-- [Kivy](https://kivy.org/)
-- [KivyMD](https://kivymd.readthedocs.io/)
-- [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
+- [Flask](https://flask.palletsprojects.com/)
 - [gTTS](https://pypi.org/project/gTTS/)
 - [pygame](https://www.pygame.org/)
