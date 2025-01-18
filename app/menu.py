@@ -6,6 +6,7 @@ from kivymd.app import MDApp
 from app.ui import QuizWordDisplay
 from app.__init__ import load_vocab
 
+
 class MenuScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -28,16 +29,15 @@ class MenuScreen(Screen):
     def load_category(self, instance):
         category = instance.text.lower()
         self.manager.current = 'quiz'
-        self.manager.get_screen('quiz').load_words(self.categories[category])
+        self.manager.get_screen('quiz').load_words(self.categories[category], instance.text.capitalize())
 
 class QuizScreen(Screen, QuizWordDisplay):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.add_widget(QuizWordDisplay())
 
-    def load_words(self, words):
-        self.children[0].vocab = words
-        self.children[0].show_random_word()
+    def load_words(self, words, category_title):
+        self.children[0].load_words(words, category_title)
 
 class MyScreenManager(ScreenManager):
     def __init__(self, **kwargs):

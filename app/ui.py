@@ -66,17 +66,37 @@ class QuizWordDisplay(BoxLayout):
         # Add top layout to main layout
         self.add_widget(top_layout)
 
+        # Hint Button Layout
+        hint_layout = BoxLayout(
+            size_hint=(1, None),
+            height=50,
+            padding=[self.width * 0.15, 0, self.width * 0.15, 0]
+        )
+
         # Hint Button
         self.hint_button = MDRaisedButton(
             text="Hint",
-            font_size=24,
-            size_hint=(0.7, None),  # 70% width
-            height=50,  # Fixed height
-            pos_hint={"center_x": 0.5},  # Center horizontally
-            md_bg_color=(0.2, 0.6, 0.86, 1),  # Custom background color
+            font_size=14,
+            size_hint=(None, None),
+            size=(50, 50),
+            pos_hint={"center_x": 0.5},
+            md_bg_color=(0.2, 0.6, 0.86, 1),
         )
         self.hint_button.bind(on_press=self.show_hint)
-        self.add_widget(self.hint_button)
+        hint_layout.add_widget(self.hint_button)
+
+        # Hint Label
+        self.hint_label = Label(
+            text="",
+            font_size=24,
+            color=(0, 0, 1, 1),  # Blue
+            size_hint=(1, None),
+            height=50,
+            valign="middle"
+        )
+        hint_layout.add_widget(self.hint_label)
+
+        self.add_widget(hint_layout)
 
         # Text Input for Meaning
         input_layout = BoxLayout(
@@ -157,6 +177,7 @@ class QuizWordDisplay(BoxLayout):
         self.word_label.text = self.current_word
         self.input_field.text = ""
         self.feedback_label.text = "" 
+        self.hint_label.text = ""  # Clear the hint label
 
         # Schedule the word to be spoken after a delay
         Clock.schedule_once(self.speak_current_word, 1)  # 1-second delay
@@ -179,10 +200,10 @@ class QuizWordDisplay(BoxLayout):
     def listen_for_word(self, *args):
         """Listen for the spoken word and check if it is correct."""
         # Determine the language based on the current word
-        if any(word["hindi"] == self.current_word for word in self.vocab):
-            language = "en"
-        else:
+        if any(word["english"] == self.current_word for word in self.vocab):
             language = "hi"
+        else:
+            language = "en"
         
         success, message = listen_for_word(self.correct_meaning, language)
         self.feedback_label.text = message
@@ -195,8 +216,7 @@ class QuizWordDisplay(BoxLayout):
 
     def show_hint(self, *args):
         """Show the meaning of the current word in the other language."""
-        self.feedback_label.text = self.correct_meaning
-        self.feedback_label.color = (0, 0, 1, 1)  # Blue
+        self.hint_label.text = self.correct_meaning
 
     def load_words(self, words, category_title):
         """Load a new set of words and display the first one."""
